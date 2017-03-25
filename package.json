@@ -1,5 +1,5 @@
 {
-  "name": "accessibility",
+  "name": "webacs",
   "version": "1.0.0",
   "description": "Library for web accessibility",
   "main": "src/index.js",
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/achaljain/accessibility.git"
   },
-  "author": "",
+  "author": "Achal Jain",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/achaljain/accessibility/issues"
