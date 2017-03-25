@@ -1,2 +1,2 @@
-# sampleLib
-Sample Lib
+# Accessibility
+A Simple Library to make any webpage accessibile.
