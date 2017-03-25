@@ -1,2 +1,2 @@
 # Accessibility
-A Simple Library to make any webpage accessibile.
+A library to make any webpage accessible.
