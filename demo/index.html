@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Accessibility Demo</title>	
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="../src/index.js"></script>
+	<script type="text/javascript" src="acsjson.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+</head>
+<body>
+	
+	<h1>Accessibility Demo</h1>
+	<div class="box">
+		<a id="button1" class="button" href="#popup1">Cyclic Tab</a>
+		<a id="button2" class="button" href="#popup2">Autoclose</a>
+		<a id="button3" class="button" href="#popup3">Arrow keys</a>
+	</div>
+
+	<div id="popup1" class="overlay">
+		<div class="popup">
+			<h2>Cyclic Tab</h2>
+			<a class="close" href="#">&times;</a>
+			<div class="content">
+				Tab will be trapped inside this popup and move in cyclic manner.
+			</div>
+		</div>
+	</div>
+
+	<div id="popup2" class="overlay">
+		<div class="popup">
+			<h2>Autoclose</h2>
+			<a class="close" href="#">&times;</a>
+			<div class="content">
+				Popup will autoclose when tab is moved outside the popup.
+			</div>
+		</div>
+	</div>
+
+	<div id="popup3" class="overlay">
+		<div class="popup">
+			<h2>Arrow Keys</h2>
+			<a class="close" href="#">&times;</a>
+			<div class="content">
+				<span>Arrow keys will move focus inside below list.</span>
+				<ul>
+					<li>ListItem 1</li>
+					<li>ListItem 2</li>
+					<li>ListItem 3</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

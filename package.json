@@ -1,19 +1,35 @@
 {
   "name": "webacs",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Library for web accessibility",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "commit": "git-cz",
+    "test": "mocha src/index.test.js -w",
+    "test:single": "mocha src/index.test.js",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/achaljain/accessibility.git"
+    "url": "https://github.com/achaljain/accessibility.git"
   },
   "author": "Achal Jain",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/achaljain/accessibility/issues"
   },
-  "homepage": "https://github.com/achaljain/accessibility#readme"
+  "homepage": "https://github.com/achaljain/accessibility#readme",
+  "devDependencies": {
+    "chai": "3.5.0",
+    "commitizen": "2.9.6",
+    "cz-conventional-changelog": "2.0.0",
+    "mocha": "3.2.0",
+    "semantic-release": "^6.3.2"
+  },
+  "dependencies": {
+    "jquery": "3.2.1"
+  },
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog"
+  }
 }
