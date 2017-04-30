@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/achaljain/accessibility.svg?branch=master)](https://travis-ci.org/achaljain/accessibility)
+
 # Web Accessibility
 A library to make any webpage accessible.
 
@@ -5,12 +7,14 @@ Web accessibility aims at making websites accessible to people with disabilities
 
 This library is based on javascript and jquery. It requires a JSON as input in which sequence of html selectors, attributes and other properties are specified. User has to initialise the library with input JSON once entire DOM structure has been loaded and application is ready to use.
 
+## [Demo](https://achaljain.github.io/accessibility/demo/)
+
 ## Installation
 ```
 npm install webacs
 ```
 
-## INPUT JSON
+## Input JSON
 
 ```
 var obj = {
@@ -125,9 +129,9 @@ An array of selectors from which alt text will be generated dynamically. Label i
 
 ```
 Example: 'aria-label': {
-			'en': 'some text <1> some text <2>'
-		 }
-		 dynamicLabel': ['selector1', 'selector2']
+    			'en': 'some text <1> some text <2>'
+    		 }
+    		 dynamicLabel': ['selector1', 'selector2']
 ```		 
 
 ### globalHotkeys
@@ -228,10 +232,10 @@ Change attribute value of an element
 Change state of element.
 ```	
 Example: 'aria-label': {
-			'en': 'some text: <>'
-		 }		 
-		 Dynamic state: AccessibilityManager.toggleState('.elemClass', 'the state');
-		 JSON stateList: AccessibilityManager.toggleState('.elemClass', 1);
+    			'en': 'some text: <>'
+    		 }		 
+    		 Dynamic state: AccessibilityManager.toggleState('.elemClass', 'the state');
+    		 JSON stateList: AccessibilityManager.toggleState('.elemClass', 1);
 ```		 
 
 ### removeAriaLabel
@@ -257,9 +261,9 @@ Registers a application level method with library which can invoked within libra
 
 	
 Example: AccessibilityManager.registerActionHandler('action1', '.myDiv', 'click');
-		 AccessibilityManager.registerActionHandler('action1', document, '', function(arg){
-		 	// Some action to perform.
-		 }, args);
+    		 AccessibilityManager.registerActionHandler('action1', document, '', function(arg){
+    		 	// Some action to perform.
+    		 }, args);
 ```		 
 
 ### dispatchAction

@@ -126,7 +126,7 @@ var AccessibilityManager = (function(){
             jQueryScriptOutputted = true;
 
             //output the script (load it from google api)
-            document.write("<scr" + "ipt type=\"text/javascript\" src=\"../node_modules/jquery/dist/jquery.min.js\"></scr" + "ipt>");
+            document.write("<scr" + "ipt type=\"text/javascript\" src=\"https://code.jquery.com/jquery-3.2.1.min.js\" integrity=\"sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=\" crossorigin=\"anonymous\"></scr" + "ipt>");
         }
         setTimeout(function() {
           initAcs(configObj, options, callback);
