@@ -38,7 +38,7 @@ obj['options']: {
 - tabmode: It can take value 0, 1 or 2.
 	- 0: Natural tab ordering. This will give zero tabindex to entire DOM.
 	- 1: Incremental tab ordering.
-	- 2: Tabindex has to specified in JSON for each element.
+	- 2: Tabindex has to be specified in JSON for each element.
 - language: Specify language for webpage. Alt text and states will be applied in the selected language. Default is 'en'.
 - setInitialFocus: Selector for element where initial focus should be kept when web page is launched.
 
