@@ -1,6 +1,6 @@
 {
   "name": "webacs",
-  "version": "0.0.0-development",
+  "version": "1.1.1",
   "description": "Library for web accessibility",
   "main": "src/index.js",
   "scripts": {
