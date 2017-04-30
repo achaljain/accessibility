@@ -3,7 +3,7 @@
 # Web Accessibility
 A library to make any webpage accessible.
 
-Web accessibility aims at making websites accessible to people with disabilities. Web accessibility standards and guidelines are managed by W3C. WCAG - Web Content Accessibility Guidelines are the list of guidelines developed for implementation and testing of accessible webpages. W3C has also started a separate program called WAI-ARIA (Accessible Rich Internet Applications) which provides support for new features in web such as sliders, drag and drop, dropdowns etc. 
+Web accessibility aims at making websites accessible to people with disabilities. Web accessibility standards and guidelines are managed by W3C. WCAG - Web Content Accessibility Guidelines are the list of guidelines developed for implementation and testing of accessible webpages. W3C has also started a separate program called WAI-ARIA (Accessible Rich Internet Applications) which provides support for new advanced features in web such as sliders, drag and drops, dropdowns etc. 
 
 This library is based on javascript and jquery. It requires a JSON as input in which sequence of html selectors, attributes and other properties are specified. User has to initialise the library with input JSON once entire DOM structure has been loaded and application is ready to use.
 
