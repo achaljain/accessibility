@@ -182,13 +182,14 @@ var AccessibilityManager = (function(){
         $.each(currentElem ,function(index, el){
 
           if(configOptions.tabMode != 2) {          
-            $(el).attr('tabindex', tabCtr);            
+            $(el).attr('tabindex', tabCtr);
+            $(el).attr('orginalTabRef', tabCtr);
           }
 
           if(elemObj[k].ignoreTab) {
             $(el).attr('tabindex', '-1');
           } else {
-            $(el).attr('orginalTabRef', $(el).attr('tabindex')); 
+            // $(el).attr('orginalTabRef', $(el).attr('tabindex')); 
             $(el).attr('acsTouch', true); 
           }
 
@@ -452,6 +453,7 @@ var AccessibilityManager = (function(){
     var dataRef = undefined;
     var nextFocusTarget = null;
     var disableFocusTargetAssign = false;
+    var disableLibFocus = false;
 
     if(mainElem) {
       dataRef = $.data(mainElem, 'acsData');
@@ -477,7 +479,10 @@ var AccessibilityManager = (function(){
 
       getChildTabGroups(currentTabGroup);
 
-      var obj = searchTabGroupInJSON(currentTabGroup);      
+      var obj = searchTabGroupInJSON(currentTabGroup); 
+      if(obj && obj.attributes && obj.attributes.disableLibFocus) {
+        disableLibFocus = true;
+      }     
       if(obj && obj.data && !dataRef) {
         dataRef = obj.data;
       }
@@ -577,7 +582,7 @@ var AccessibilityManager = (function(){
       }
     }
     
-    if($(nextFocusTarget).attr('disableLibFocus')) {
+    if($(nextFocusTarget).attr('disableLibFocus') || (disableLibFocus == true)) {
       nextFocusTarget = null;
     }
     
@@ -647,11 +652,11 @@ var AccessibilityManager = (function(){
       return;
     }
     if($(obj.selector).attr('orginaltabref')) {
-      tabCtr = parseInt($(obj.selector).attr('orginaltabref')) + 1;
-      if(obj.children) {
-        // childTabGroups = {};
-        addAcsAttr(obj.children);
-      }
+      tabCtr = parseInt($(obj.selector).attr('orginaltabref')) + 1;      
+    }
+    if(obj.children) {
+      // childTabGroups = {};
+      addAcsAttr(obj.children);
     }
     // if(obj.data && obj.data.cyclicTab) {      
     //   cyclicTabbingStart = $(obj.data.cyclicTab.start)[0];
@@ -694,11 +699,18 @@ var AccessibilityManager = (function(){
     var groupRef = jsonKeyRef || currentTabGroup;
     var obj = searchTabGroupInJSON(jsonKeyRef);    
     var childrenArr = [];
-    if(obj && obj.children) {      
-      $.each(obj.children, function(k, v) {
-        childrenArr.push(v.selector);
-      })
+    function traverse(obj) {
+      if(obj && obj.children) {      
+        $.each(obj.children, function(k, v) {
+          if(v.ignoreTab && v.children) {            
+            traverse(v);
+          } else {
+            childrenArr.push(v.selector);
+          }         
+        })        
+      }      
     }
+    traverse(obj);
     return childrenArr;
   }
 
@@ -714,8 +726,12 @@ var AccessibilityManager = (function(){
             if(!childTabGroups[v.data.childTabGroupId]) {
               childTabGroups[v.data.childTabGroupId] = [];
             }
-            if(childTabGroups[v.data.childTabGroupId].indexOf(v.selector) < 0) {
-              childTabGroups[v.data.childTabGroupId].push(v.selector);
+            if(v.ignoreTab) {
+              // do nothing
+            } else {
+              if(childTabGroups[v.data.childTabGroupId].indexOf(v.selector) < 0) {
+                childTabGroups[v.data.childTabGroupId].push(v.selector);
+              }
             }
           }
           if(v.children) {
