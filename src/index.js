@@ -45,7 +45,9 @@ var AccessibilityManager = (function(){
     8: 'BACKSPACE',
     9: 'TAB',
     13: 'ENTER',
+    18: 'ALT',
     27: 'ESCAPE',
+    32: 'SPACE',
     33: 'PAGEUP',
     34: 'PAGEDOWN',
     37: 'LEFTARROW',
@@ -282,7 +284,7 @@ var AccessibilityManager = (function(){
       }
 
       if((key >=37) && (key <= 40)) {
-        evt.preventDefault();
+        // evt.preventDefault();
         var dir;
         switch(key) {
           case 37: dir = 0; break;
@@ -480,7 +482,7 @@ var AccessibilityManager = (function(){
       getChildTabGroups(currentTabGroup);
 
       var obj = searchTabGroupInJSON(currentTabGroup); 
-      if(obj && obj.attributes && obj.attributes.disableLibFocus) {
+      if(obj && obj.attributes && obj.attributes.disableLibFocus && ($(mainElem)[0] == $(obj.selector)[0])) {
         disableLibFocus = true;
       }     
       if(obj && obj.data && !dataRef) {
@@ -702,11 +704,14 @@ var AccessibilityManager = (function(){
     function traverse(obj) {
       if(obj && obj.children) {      
         $.each(obj.children, function(k, v) {
-          if(v.ignoreTab && v.children) {            
-            traverse(v);
+          if(v.ignoreTab) {
+            // do nothing
           } else {
             childrenArr.push(v.selector);
-          }         
+          }
+          if(v.children) {
+            traverse(v); 
+          }                  
         })        
       }      
     }
@@ -788,11 +793,11 @@ var AccessibilityManager = (function(){
     activeElementSet.current = elem;
     activeElementSet.next = getNextActiveElement(cycleGroup, 1, elem);
     activeElementSet.prev = getNextActiveElement(cycleGroup, -1, elem);
-    if(isMobile) {
-      disableAcsElems(cycleGroup, function() {
-        enableAcsElems([activeElementSet.prev,activeElementSet.current,activeElementSet.next]);
-      })    
-    }
+    // if(isMobile) {
+    //   disableAcsElems(cycleGroup, function() {
+    //     enableAcsElems([activeElementSet.prev,activeElementSet.current,activeElementSet.next]);
+    //   })    
+    // }
   }
 
   function dispatchActionHandler(actionName) {
