@@ -261,7 +261,7 @@ var AccessibilityManager = (function(){
 
   function addAcsEvents() {    
 
-    $(document).on('keydown', function(evt) {
+    $(document).off('keydown').on('keydown', function(evt) {
 
       if(evt.altKey == true) {
         globalKeyData.mods['ALT'] = true;        
@@ -353,8 +353,15 @@ var AccessibilityManager = (function(){
                           break;
             case 'focus': actionTarget.focus(); 
                           break;            
-            default: dispatchActionHandler(keyActionObj.action);
-                     break;              
+            default:  var customTarget = undefined;
+	                  if(keyActionObj.target) {
+	                    customTarget = actionTarget;
+	                    if(keyActionObj.target == "self") {
+	                      customTarget = mainTarget;
+	                    }
+	                  }
+	                  dispatchActionHandler(keyActionObj.action, customTarget);
+	                  break;              
           }          
           setTimeout(function() {
             if(keyActionObj.autoFocus) {
@@ -800,13 +807,14 @@ var AccessibilityManager = (function(){
     // }
   }
 
-  function dispatchActionHandler(actionName) {
+  function dispatchActionHandler(actionName, actionTarget) {    
     if(ActionManager.actions[actionName] != undefined) {
+      var tgt = $(actionTarget)[0] || $(ActionManager.actions[actionName]['target'])[0];
       if(ActionManager.actions[actionName]['name']) {
-        $(ActionManager.actions[actionName]['target']).trigger(ActionManager.actions[actionName]['name'], [ActionManager.actions[actionName]['data']]);
+        $(tgt).trigger(ActionManager.actions[actionName]['name'], [ActionManager.actions[actionName]['data']]);
       }
       if(ActionManager.actions[actionName]['callback']) {
-        (ActionManager.actions[actionName]['callback']).call(ActionManager.actions[actionName]['target'], ActionManager.actions[actionName]['data']);
+        (ActionManager.actions[actionName]['callback']).call(tgt, ActionManager.actions[actionName]['data']);
       }      
       // ActionManager.actions[strAction].map(function(func){
       //   func(data);
@@ -1034,8 +1042,8 @@ var AccessibilityManager = (function(){
       }      
     },
 
-    dispatchAction: function(strAction) {
-      dispatchActionHandler(strAction);
+    dispatchAction: function(strAction, actionTarget) {
+      dispatchActionHandler(strAction, actionTarget);
     },
 
     getPanelLauncher: function() {

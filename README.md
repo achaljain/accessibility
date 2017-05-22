@@ -59,7 +59,7 @@ obj['hotkeys'] = {
 ```
 For multiple mods write 'mod' property as array- mod: ['ctrl', 'shift']
 'action': can be 'click', 'focus' or any custom action registered with library.
-'target': 'action' will be perfomed on 'target' if specified.
+'target': 'action' will be perfomed on 'target' if specified. For custom actions, use 'self' to set target as current element.
 'autoFocus': if avaialble focus will set to the specified element after action is perfomed
 
 
