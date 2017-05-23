@@ -73,6 +73,9 @@ Below is a dummy JSON to demonstrate correct place for each property.
 obj['elemSeq'] = {
 'elem1': {
     selector: 'anySelector',
+    docRefObj: {
+      contentIframe: ".iframeSelector"
+    },
     attributes: {
       'role': 'button',
       'aria-label': {
@@ -123,6 +126,9 @@ obj['elemSeq'] = {
 ```			
 
 ## JSON Options
+
+### docRefObj
+Add this object to change parent object for selector. Useful for iframes in page. In iframes tab focus may not work, use key events to manage focus transition between main document and iframe contents.
 
 ### dynamicLabel
 An array of selectors from which alt text will be generated dynamically. Label is applied once during initilisation. To update label or part of it dynamically use states property.

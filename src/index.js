@@ -177,7 +177,10 @@ var AccessibilityManager = (function(){
 
     $.each(elemObj, function(k, v) {
       
-      var currentElem = $(elemObj[k].selector);      
+      var currentElem = $(elemObj[k].selector);
+      if(elemObj[k].docRefObj) {
+        currentElem = $(elemObj[k].docRefObj.contentIframe).contents().find(elemObj[k].selector);
+      }
 
       if(currentElem) {
 
@@ -489,7 +492,11 @@ var AccessibilityManager = (function(){
       getChildTabGroups(currentTabGroup);
 
       var obj = searchTabGroupInJSON(currentTabGroup); 
-      if(obj && obj.attributes && obj.attributes.disableLibFocus && ($(mainElem)[0] == $(obj.selector)[0])) {
+      var domElemRef = $(obj.selector)[0];
+      if(obj.docRefObj) {
+        domElemRef = $(obj.docRefObj.contentIframe).contents().find(obj.selector)[0];
+      }
+      if(obj && obj.attributes && obj.attributes.disableLibFocus && ($(mainElem)[0] == domElemRef)) {
         disableLibFocus = true;
       }     
       if(obj && obj.data && !dataRef) {
@@ -660,8 +667,12 @@ var AccessibilityManager = (function(){
     if(!obj) {
       return;
     }
-    if($(obj.selector).attr('orginaltabref')) {
-      tabCtr = parseInt($(obj.selector).attr('orginaltabref')) + 1;      
+    var domElemRef = $(obj.selector);
+    if(obj.docRefObj) {
+      domElemRef = $(obj.docRefObj.contentIframe).contents().find(obj.selector);
+    }
+    if($(domElemRef).attr('orginaltabref')) {
+      tabCtr = parseInt($(domElemRef).attr('orginaltabref')) + 1;      
     }
     if(obj.children) {
       // childTabGroups = {};
