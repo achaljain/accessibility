@@ -193,6 +193,7 @@ var AccessibilityManager = (function(){
 
           if(elemObj[k].ignoreTab) {
             $(el).attr('tabindex', '-1');
+            $(el).attr('ignoreTab', 'true');
           } else {
             // $(el).attr('orginalTabRef', $(el).attr('tabindex')); 
             $(el).attr('acsTouch', true); 
@@ -409,7 +410,15 @@ var AccessibilityManager = (function(){
       }      
     });
 
-    $('body').on('focus', '*', function(evt) {     
+    $('body').on('focus', '*', function(evt) { 
+       if($(evt.target).attr('disableLibFocus')){
+        return;
+      }
+        elemRef = $(evt.target).closest('[acsTouch = true]')[0]; 
+      if( $(elemRef).attr('checkDisable') && $(elemRef).hasClass($(elemRef).attr('checkDisable')) ) { return; }    
+     
+     
+
       if(focusHandlerFlag == true) {
         focusHandlerFlag = false;
         setCurrentActiveSet(evt.target);        
@@ -423,8 +432,10 @@ var AccessibilityManager = (function(){
       if(!isMobile) {
         return;
       }
+
       setTimeout(function() { 
-        if(searchElementInCycleGroup(evt.target) == true) {
+      
+        if(searchElementInCycleGroup(evt.target)) {
           return;
         }       
         if((cyclicTabbing == true) && (focusElemRef != null)) { 
@@ -886,7 +897,7 @@ var AccessibilityManager = (function(){
   function enableAcsElems(elemArr, callback) {
     $.each(elemArr, function(idx, elemRef) {      
       $(elemRef).each(function(index, elem) {
-        if($(elem).attr('orginalTabRef')) {
+        if($(elem).attr('orginalTabRef') && !$(elem).attr('ignoreTab')) {
           $(elem).attr('tabindex', $(elem).attr('orginalTabRef'));
         }
         if($(elem).attr('savedLabel')) {
@@ -975,7 +986,17 @@ var AccessibilityManager = (function(){
       cycleGroup = [];
       globalTabGroupStack.pop();
       if(globalTabGroupStack.length > 0) {
-        currentTabGroup = globalTabGroupStack[globalTabGroupStack.length - 1];        
+        var ctr = globalTabGroupStack.length - 1;
+        while(ctr>=0) {
+          currentTabGroup = globalTabGroupStack[ctr];
+          if(searchTabGroupInJSON(currentTabGroup))  {
+              break;
+          } else {
+            globalTabGroupStack.pop();
+          }
+          ctr--;
+        }
+        
         acsClickHandler();
       } else {
         currentTabGroup = null;
